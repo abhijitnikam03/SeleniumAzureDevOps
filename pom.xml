@@ -111,7 +111,7 @@
 					<reuseForks>true</reuseForks>
 					<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
 					<suiteXmlFiles>
-						<suiteXmlFile>/MavenProjectPractise/testng.xml</suiteXmlFile>	
+						<suiteXmlFile>MavenProjectPractise/testng.xml</suiteXmlFile>	
 					</suiteXmlFiles>
 				</configuration>
 			</plugin>
