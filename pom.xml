@@ -108,12 +108,12 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${maven.surefire.version}</version>
 				<configuration>
-					<includes>
-						<include>**/ParallelRun.java</include>
-					</includes>
-					<parallel>methods</parallel>
-					<threadCount>4</threadCount>
-					<useUnlimitedThreads>false</useUnlimitedThreads>
+					<forkCount>3</forkCount>
+					<reuseForks>true</reuseForks>
+					<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+					<suiteXmlFiles>
+						<suiteXmlFile>/MavenProjectPractise/testng.xml</suiteXmlFile>	
+					</suiteXmlFiles>
 				</configuration>
 			</plugin>
 		</plugins>

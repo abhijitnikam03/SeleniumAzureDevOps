@@ -1,5 +1,11 @@
+PageFactory\SwagLab\CheckOutPage.class
+PageFactory\SwagLab\ProductSelectPage.class
+PageFactory\SwagLab\CheckOutInformation.class
+PageFactory\LoginPageObject.class
+PageFactory\SwagLab\HomePage.class
+PageFactory\SwagLab\RahulShettyPage.class
 util\ExcelReader.class
 PageFactory\HomePageObject.class
 util\ConfigReader.class
-PageFactory\LoginPageObject.class
 factory\DriverFactory.class
+PageFactory\SwagLab\LoginPage.class
