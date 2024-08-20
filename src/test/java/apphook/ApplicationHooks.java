@@ -43,14 +43,14 @@ public class ApplicationHooks {
 
 	@After(order = 1)
 	public void tearDown(Scenario scenario) throws IOException {
-		if (scenario.isFailed()) {
+	//	if (scenario.isFailed()) {
 			// take screenshot:
 			String screenshotName = scenario.getName().replaceAll(" ", "_");
 		//	byte[] sourcePath = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
 		//  scenario.attach(sourcePath, "image/png", screenshotName);
 			File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 			FileUtils.copyFile(file, new File("./test-output/ScreenShot/"+screenshotName+".png"));
-		}
+	//	}
 	}
 
 }
