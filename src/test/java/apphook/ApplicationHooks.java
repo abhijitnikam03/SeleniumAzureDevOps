@@ -54,9 +54,13 @@ public class ApplicationHooks {
 		Path screenshotPath = Paths.get("test-output/ScreenShot");
 		Path pdfPath = Paths.get("test-output/PdfReport");
 		Path sparkreportPath = Paths.get("test-output/SparkReport");
+		Path vrPath = Paths.get("test-output/VideoRecord");
+
 		deletefiles(screenshotPath);
 		deletefiles(pdfPath);
 		deletefiles(sparkreportPath);
+		deletefiles(vrPath);
+
 	}
 
 	@After(order = 0)
