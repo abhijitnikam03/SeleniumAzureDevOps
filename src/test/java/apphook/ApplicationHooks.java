@@ -1,13 +1,12 @@
 package apphook;
 
-import java.awt.Dimension;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsEnvironment;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.Properties;
 import java.util.stream.Stream;
 
@@ -16,6 +15,10 @@ import org.monte.screenrecorder.ScreenRecorder;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.bidi.browsingcontext.BrowsingContext;
+
+import com.assertthat.selenium_shutterbug.core.Capture;
+import com.assertthat.selenium_shutterbug.core.Shutterbug;
 
 import factory.DriverFactory;
 import io.cucumber.java.After;
@@ -29,7 +32,8 @@ public class ApplicationHooks {
 	private DriverFactory driverFactory;
 	private WebDriver driver;
 	private ConfigReader configReader;
-	private ScreenRecorder screenRecorder;
+	String screenshotName; 
+	Path screenshotPath;
 	Properties prop;
 
 	@Before(order = 0)
@@ -48,10 +52,10 @@ public class ApplicationHooks {
 	}
 	
 	@Before(order = 2)
-	public void filespath() throws Exception
-	{
+	public void filespath(Scenario scenario) throws Exception
+	{	
 		ScreenRecorderUtil.startRecord("filespath");
-		Path screenshotPath = Paths.get("test-output/ScreenShot");
+		screenshotPath = Paths.get("test-output/ScreenShot/"+scenario.getName().replaceAll(" ", "_"));
 		Path pdfPath = Paths.get("test-output/PdfReport");
 		Path sparkreportPath = Paths.get("test-output/SparkReport");
 		Path vrPath = Paths.get("test-output/VideoRecord");
@@ -70,15 +74,9 @@ public class ApplicationHooks {
 	}
 
 	@After(order = 1)
-	public void tearDown(Scenario scenario) throws IOException {
-	//	if (scenario.isFailed()) {
-			// take screenshot:
-			String screenshotName = scenario.getName().replaceAll(" ", "_");
-		//	byte[] sourcePath = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-		//  scenario.attach(sourcePath, "image/png", screenshotName);
-			File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-			FileUtils.copyFile(file, new File("./test-output/ScreenShot/"+screenshotName+".png"));
-	//	}
+	public void tearDown(Scenario scenario) throws IOException {		
+		screenshotName=scenario.getName().replaceAll(" ", "_");
+		Shutterbug.shootPage(driver, Capture.FULL, false).save("./test-output/ScreenShot/" +screenshotName);	
 	}
 	
 	public void deletefiles(Path folderPath) {
