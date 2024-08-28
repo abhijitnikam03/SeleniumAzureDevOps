@@ -1,43 +1,67 @@
 package stepDefination.SwagLab;
 
-import java.time.Duration;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import PageFactory.SwagLab.RahulShettyPage;
 import factory.DriverFactory;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import util.ExcelReader;
 
 public class RahulShettyPageStep {
 	
 	RahulShettyPage rp;
-	
+	String excelpath ="src/test/java/testData/InputData.xlsx";
+	ExcelReader reader=new ExcelReader();
+	String rediobrtn;
+	String cntname;
+	String dropdown;
+	String coursename;
+	String hidevalue;
 	
 	public RahulShettyPageStep() {
 		
 		rp=new RahulShettyPage(DriverFactory.getDriver()); 
 	}
 	
-	@Given("Check for radio button {string}")
-	public void check_for_radio_button(String button) {
-		rp.radiobutton(button);
+	@Given("Navigate to page with url {string}")
+	public void navigate_to_login_page_with_url(String url) {
+		DriverFactory.getDriver().navigate().to(url);
 	}
 	
-	@And("Select suggession country name {string}")
-	public void select_suggetion_country_name(String cname) throws InterruptedException {
-		rp.country_name(cname);
+	@And("Check for radio button")
+	public void check_for_radio_button() {
+		rp.radiobutton(rediobrtn);
+	}
+	
+	@And("Select testdata from excel {string} {int}")
+	public void select_testdata_from_excel(String sheetname,int rownum) throws InvalidFormatException, IOException {
+		  List<Map<String,String>> listLogin= reader.getData(excelpath, sheetname);
+		  rediobrtn=listLogin.get(rownum).get("redio button").trim();
+		  cntname=listLogin.get(rownum).get("country name").trim();
+		  dropdown=listLogin.get(rownum).get("drop down option").trim();
+		  coursename=listLogin.get(rownum).get("course name").trim();
+		  hidevalue=listLogin.get(rownum).get("hide value").trim();
+		  System.out.println(dropdown);
+	}
+	
+	@And("Select suggession country name")
+	public void select_suggetion_country_name() throws InterruptedException {
+		rp.country_name(cntname);
 	}
 
-	@And("Select Dropdown example {string}")
-	public void select_dropdown_example(String value) {
-		rp.dropdown(value);
+	@And("Select Dropdown example")
+	public void select_dropdown_example() {
+		rp.dropdown(dropdown);
 	}
 	
-	@And("Select Check box example {string}")
-	public void select_check_box_example(String chkbx) {
-		rp.checkbox(chkbx);
+	@And("Select Check box example")
+	public void select_check_box_example() {
+		rp.checkbox(dropdown);
 	}
 	
 	@And("Check new window is open or not")
@@ -55,15 +79,15 @@ public class RahulShettyPageStep {
 		rp.alerthandle();
 	}
 	
-	@And("Find course amount from table {string}")
-	public void find_course_amount_from_table(String course)  {
-		rp.tabledata(course);
+	@And("Find course amount from table")
+	public void find_course_amount_from_table()  {
+		rp.tabledata(coursename);
 	}
 	
-	@And("Enter value in hide field {string}")
-	public void enter_value_in_hide_field(String txt)  {
+	@And("Enter value in hide field")
+	public void enter_value_in_hide_field()  {
 		rp.showbtn();
-		rp.entertxt(txt);
+		rp.entertxt(hidevalue);
 	}
 	
 	@And("Mouseover on page")

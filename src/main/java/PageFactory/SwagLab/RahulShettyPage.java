@@ -3,6 +3,7 @@ package PageFactory.SwagLab;
 import java.time.Duration;
 import java.util.List;
 import java.util.Set;
+import org.openqa.selenium.Keys;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -78,8 +79,8 @@ public class RahulShettyPage {
 
 	public void country_name(String cname) throws InterruptedException {
 		countryname.sendKeys(cname);
-		int cnt=countryddl.size();
 		Thread.sleep(3000);
+		int cnt=countryddl.size();
 		for(int i=0;i<cnt;i++) {
 			String cntname=countryddl.get(i).getText();
 			if(cntname.toLowerCase().equals(cname)) {
@@ -88,7 +89,6 @@ public class RahulShettyPage {
 				break;
 			}
 		}
-		
 	}
 	
 	public void dropdown(String ddl) {
